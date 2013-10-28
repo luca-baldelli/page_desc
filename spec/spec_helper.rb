@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift("#{__dir__}/../lib")
 
+require 'simplecov' if ENV['coverage']
 require 'page_desc'
 
 RSpec.configure do

@@ -34,6 +34,10 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0.0)
       websocket (~> 1.0.4)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
     watir-webdriver (0.6.4)
       selenium-webdriver (>= 2.18.0)
     websocket (1.0.7)
@@ -47,4 +51,5 @@ DEPENDENCIES
   capybara
   rake
   rspec
+  simplecov
   watir-webdriver

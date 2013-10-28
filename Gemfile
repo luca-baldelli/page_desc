@@ -5,6 +5,7 @@ gem 'capybara'
 
 group :test do
   gem 'rspec'
+  gem 'simplecov'
 end
 
 group :development do
