@@ -17,12 +17,14 @@ module PageDesc
 
     attr_reader :url
 
-    def initialize
+    def initialize session
       @url = self.class.url
+      @main_element = self.class.main_element
+      @main_element.session = session
     end
 
     def method_missing name, *args, &block
-      self.class.main_element.send(name, *args, &block)
+      @main_element.send(name, *args, &block)
     end
   end
 end

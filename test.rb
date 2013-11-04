@@ -21,12 +21,6 @@ class GitHubLogin < Page
   url 'https://github.com/login'
 
   element :login_form, LoginForm
-
-  element :top_nav, css: '.top-nav' do
-    return_object do |*links|
-      links.collect { |link| browser_element.find(".#{link}") }
-    end
-  end
 end
 
 include Browser
@@ -35,5 +29,4 @@ browser.visit(GitHub)
 
 page.sign_in.click
 
-#page.login_form.forgot_password.click
-puts page.top_nav('explore', 'features')
+page.login_form.forgot_password.click

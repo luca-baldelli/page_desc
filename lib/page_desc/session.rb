@@ -1,9 +1,5 @@
 module PageDesc
   class Session
-    class << self
-      attr_accessor :active
-    end
-
     attr_reader :page
 
     def initialize mode
@@ -24,8 +20,7 @@ module PageDesc
     end
 
     def move_to page
-      Session.active = self
-      @page = page.new
+      @page = page.new self
     end
   end
 end

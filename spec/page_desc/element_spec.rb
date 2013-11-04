@@ -19,21 +19,22 @@ describe PageDesc::Element do
   end
 
   context 'active session' do
-    let(:browser) { double(:session, document: double(:document)) }
-
-    before do
-      Session.active = browser
+    it 'uses parents session' do
+      parent = double(:parent, session: :browser)
+      element = Element.new(parent: parent, selector: {css: 'selector'})
+      element.browser.should == :browser
     end
 
-    it 'has a method for quick access to active session' do
-      element = Element.new(parent: :parent, selector: {css: 'selector'})
-      element.browser.should == browser
+    it 'uses its own session' do
+      element = Element.new
+      element.session = :browser
+      element.browser.should == :browser
     end
 
     context 'browser element' do
       it 'returns the document if no selector specified' do
-        element = Element.new
-        element.browser_element.should == browser.document
+        element = Element.new(session: double(:browser, document: :document))
+        element.browser_element.should == :document
       end
 
       it 'can be retrieved by css selector' do
@@ -56,7 +57,8 @@ describe PageDesc::Element do
     end
 
     it 'delegates to browser element' do
-      element = Element.new
+      parent = double(:parent, browser_element: double(:browser_element, find: 'element'))
+      element = Element.new(parent: parent, selector: {css: '.selector'})
       element.browser_element.should_receive(:some_method).with(:some_argument, :another_argument)
       element.some_method(:some_argument, :another_argument)
     end
@@ -108,20 +110,6 @@ describe PageDesc::Element do
       element.sub_element('a param', some: 'params')
 
       params.should == ['a param', {some: 'params'}]
-    end
-
-    context 'return object' do
-      it 'can be configured' do
-        element = Element.new do
-          element(:sub_element, css: 'some_css') do
-            return_object do |param|
-              "custom return object: #{param}"
-            end
-          end
-        end
-
-        element.sub_element('The parameter').should == 'custom return object: The parameter'
-      end
     end
   end
 

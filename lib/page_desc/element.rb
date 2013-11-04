@@ -1,10 +1,11 @@
 module PageDesc
   class Element
     attr_reader :selector, :hook, :params
-    attr_accessor :parent
+    attr_accessor :parent, :session
 
     def initialize options={}, &block
-      @selector, @parent, @params = options[:selector], options[:parent], options[:params]
+      @selector, @parent, @session = options[:selector], options[:parent], options[:session]
+      @params = options[:params]
       self.instance_eval(&block) if block_given?
     end
 
@@ -17,8 +18,7 @@ module PageDesc
           element.parent = self
           element
         else
-          element = Element.new(parent: self, selector: args[1], params: params, &block)
-          element.return_object ? element.return_object.call(*params) : element
+          Element.new(parent: self, selector: args[1], params: params, &block)
         end
       end
     end
@@ -27,11 +27,6 @@ module PageDesc
       define_method(hook) do |&block|
         hooks[hook] = block
       end
-    end
-
-    def return_object &block
-      return @return_object unless block_given?
-      @return_object = block
     end
 
     def method_missing name, *args
@@ -47,7 +42,7 @@ module PageDesc
     end
 
     def browser
-      Session.active
+      @session || parent.session
     end
 
     private

@@ -28,16 +28,11 @@ describe PageDesc::Session do
     let(:session) { Session.new(:chrome) }
 
     context 'move_to' do
-      let(:a_page) { double(:a_page, new: :page_instance) }
-
       it 'should change the current page' do
+        a_page = double(:a_page)
+        a_page.should_receive(:new).with(session).and_return :page_instance
         session.move_to(a_page)
         session.page.should == :page_instance
-      end
-
-      it 'should set the active session' do
-        session.move_to(a_page)
-        Session.active.should == session
       end
     end
 
