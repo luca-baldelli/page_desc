@@ -124,9 +124,9 @@ describe PageDesc::Element do
         end
       end
 
-      sub_element = double(:sub_element, click: 'click')
+      sub_element = double(:sub_element, action: 'action')
       element.stub(:browser_element).and_return(double(:parent_element, find: sub_element))
-      element.sub_element.click
+      element.sub_element.action.should == 'action'
       hooks_called.should == [:before, :after]
     end
 

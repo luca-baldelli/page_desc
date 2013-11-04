@@ -31,8 +31,9 @@ module PageDesc
 
     def method_missing name, *args
       hooks[:before].call if hooks[:before]
-      browser_element.send(name, *args)
+      result = browser_element.send(name, *args)
       hooks[:after].call if hooks[:after]
+      result
     end
 
     def browser_element

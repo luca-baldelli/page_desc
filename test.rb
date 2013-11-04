@@ -29,4 +29,4 @@ browser.visit(GitHub)
 
 page.sign_in.click
 
-page.login_form.forgot_password.click
+puts page.login_form.text
