@@ -32,10 +32,16 @@ describe PageDesc::Page do
         TestPage.main_element.should == :the_document
       end
 
-      it 'is passed to the instance' do
-        document = Element.new
+      it 'is passed to the instance as a copy' do
+        document = Element.new(selector: :selector)
+        document.instance_variable_set(:@hooks, :hooks)
+
         TestPage.instance_variable_set(:@main_element, document)
-        TestPage.new(:session).instance_variable_get(:@main_element).should == document
+        main_element = TestPage.new(:session).instance_variable_get(:@main_element)
+
+        main_element.instance_variable_get(:@selector).should == :selector
+        main_element.instance_variable_get(:@hooks).should == :hooks
+        main_element.instance_variable_get(:@session).should == :session
       end
     end
 

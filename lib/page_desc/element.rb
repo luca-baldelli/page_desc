@@ -1,6 +1,6 @@
 module PageDesc
   class Element
-    attr_reader :selector, :hook, :params
+    attr_reader :selector, :params
     attr_accessor :parent, :session
 
     def initialize options={}, &block

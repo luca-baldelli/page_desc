@@ -19,7 +19,7 @@ module PageDesc
 
     def initialize session
       @url = self.class.url
-      @main_element = self.class.main_element
+      @main_element = self.class.main_element.clone
       @main_element.session = session
     end
 
