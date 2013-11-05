@@ -29,4 +29,7 @@ browser.visit(GitHub)
 
 page.sign_in.click
 
-puts page.login_form.text
+puts page.login_form.attribute(:action)
+#has_class
+#text
+#has_text?

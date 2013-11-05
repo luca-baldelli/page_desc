@@ -6,7 +6,7 @@ module PageDesc
     def initialize options={}, &block
       @selector, @parent, @session = options[:selector], options[:parent], options[:session]
       @params = options[:params]
-      self.instance_eval(&block) if block_given?
+      self.instance_exec(*@params, &block) if block_given?
     end
 
     def element *args, &block
@@ -29,6 +29,7 @@ module PageDesc
       end
     end
 
+    #TODO actions: text, has_text, css_class, attributes, click, set, values
     def method_missing name, *args
       hooks[:before].call if hooks[:before]
       result = browser_element.send(name, *args)

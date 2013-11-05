@@ -73,6 +73,9 @@ describe PageDesc::Element do
       end
     end
 
+    #TODO ACTIONS
+    #TODO execute hooks when invoking actions
+
     it 'can be created' do
       sub_element = main_element.sub_element
 
@@ -102,8 +105,8 @@ describe PageDesc::Element do
       params = nil
 
       element = Element.new do
-        element(:sub_element, css: 'some_css') do
-          params = params()
+        element(:sub_element, css: 'some_css') do |*args|
+          params = args
         end
       end
 
