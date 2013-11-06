@@ -16,11 +16,18 @@ RSpec.configure do
     end
   end
 
-  shared_context :element_actions do
+  shared_context :actions do
     let(:element) do
-      element = Element.new(session: double(:session, document: double(:document)))
-      element.extend(Actions::Element)
-      element
+      Element.new(session: double(:session, document: double(:document)))
     end
+
+    let(:element_with_hooks) do
+      Element.new(session: double(:session, document: double(:document))) do
+        before { (@hooks_called||=[]) << :before }
+        after { (@hooks_called||=[]) << :after }
+      end
+    end
+
+    let(:hooks_called) { element_with_hooks.instance_variable_get(:@hooks_called) }
   end
 end
