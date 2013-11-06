@@ -3,26 +3,12 @@ module PageDesc
     attr_reader :selector, :params
     attr_accessor :parent, :session
 
+    include ElementGenerator
+
     def initialize options={}, &block
       @selector, @parent, @session = options[:selector], options[:parent], options[:session]
       @params = options[:params]
       self.instance_exec(*@params, &block) if block_given?
-    end
-
-    def element *args, &block
-      identifier = args.first
-
-      define_singleton_method identifier do |*params|
-        if args[1].is_a?(Class)
-          element = args[1].main_element.clone
-          element.parent = self
-        else
-          element = Element.new(parent: self, selector: args[1], params: params, &block)
-        end
-
-        element.extend BaseActions
-        element
-      end
     end
 
     [:before, :after].each do |hook|

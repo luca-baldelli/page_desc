@@ -107,25 +107,41 @@ describe PageDesc::Element do
       params.should == ['a param', {some: 'params'}]
     end
 
-    context 'base actions' do
-      it 'are extended by elements' do
-        element = Element.new
-        element.element :sub_element
-        (class << element.sub_element; self; end).included_modules.should include(BaseActions)
+    describe 'actions' do
+      context 'base actions' do
+        it 'are extended by elements' do
+          element = Element.new
+          element.element :sub_element
+          (class << element.sub_element; self; end).included_modules.should include(Actions::Element)
+        end
+
+        it 'are extended by clickables' do
+          element = Element.new
+          element.clickable :sub_element, css: 'selector'
+          (class << element.sub_element; self; end).included_modules.should include(Actions::Element)
+        end
+
+        it 'are extended by sections' do
+          class SubSection < Section
+          end
+
+          section_main_element = Element.new(selector: {css: 'section'})
+          SubSection.instance_variable_set(:@main_element, section_main_element)
+
+          element = Element.new do
+            element(:sub_section, SubSection)
+          end
+
+          (class << element.sub_section; self; end).included_modules.should include(Actions::Element)
+        end
       end
 
-      it 'are extended by sections' do
-        class SubSection < Section
+      context 'clickable actions' do
+        it 'are extended by clickables' do
+          element = Element.new
+          element.clickable :sub_element, css: 'selector'
+          (class << element.sub_element; self; end).included_modules.should include(Actions::Clickable)
         end
-
-        section_main_element = Element.new(selector: {css: 'section'})
-        SubSection.instance_variable_set(:@main_element, section_main_element)
-
-        element = Element.new do
-          element(:sub_section, SubSection)
-        end
-
-        (class << element.sub_section; self; end).included_modules.should include(BaseActions)
       end
     end
   end

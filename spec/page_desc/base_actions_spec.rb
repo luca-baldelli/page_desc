@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe BaseActions do
-  include_context :base_actions
+describe Actions::Element do
+  include_context :element_actions
 
   it 'can read browser element text' do
     element.browser_element.should_receive(:text).and_return('text')

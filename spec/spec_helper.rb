@@ -16,10 +16,10 @@ RSpec.configure do
     end
   end
 
-  shared_context :base_actions do
+  shared_context :element_actions do
     let(:element) do
       element = Element.new(session: double(:session, document: double(:document)))
-      element.extend(BaseActions)
+      element.extend(Actions::Element)
       element
     end
   end
