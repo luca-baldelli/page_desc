@@ -15,4 +15,12 @@ RSpec.configure do
       attr_reader :capybara_session
     end
   end
+
+  shared_context :base_actions do
+    let(:element) do
+      element = Element.new(session: double(:session, document: double(:document)))
+      element.extend(BaseActions)
+      element
+    end
+  end
 end
