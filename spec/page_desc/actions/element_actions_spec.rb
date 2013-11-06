@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Actions::Element do
+describe Actions::ElementActions do
   include_context :actions
 
   before do
-    element.extend(Actions::Element)
-    element_with_hooks.extend(Actions::Element)
+    element.extend(Actions::ElementActions)
+    element_with_hooks.extend(Actions::ElementActions)
   end
 
   describe 'text' do

@@ -1,12 +1,14 @@
 module PageDesc
   module Actions
-    module Clickable
+    module ClickableActions
+      extend Action
+
       def self.extended clazz
-        clazz.extend Actions::Element
+        clazz.extend Actions::ElementActions
       end
 
-      def click
-        execute_with_hooks { browser_element.click }
+      action :click do
+        browser_element.click
       end
     end
   end

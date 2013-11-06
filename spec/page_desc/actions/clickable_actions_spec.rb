@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Actions::Clickable do
+describe Actions::ClickableActions do
   include_context :actions
 
   before do
-    element.extend(Actions::Clickable)
-    element_with_hooks.extend(Actions::Clickable)
+    element.extend(Actions::ClickableActions)
+    element_with_hooks.extend(Actions::ClickableActions)
   end
 
   describe 'click' do
