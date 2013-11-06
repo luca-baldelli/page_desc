@@ -17,7 +17,7 @@ module PageDesc
       end
     end
 
-    #TODO actions: text, has_text, css_class, attributes, click, set, values
+    #TODO actions: attributes, set, values
 
     def browser_element
       return browser.document unless parent

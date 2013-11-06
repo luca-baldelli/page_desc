@@ -66,9 +66,6 @@ describe PageDesc::Element do
       end
     end
 
-    #TODO ACTIONS
-    #TODO execute hooks when invoking actions
-
     it 'can be created' do
       sub_element = main_element.sub_element
 
