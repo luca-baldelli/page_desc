@@ -1,7 +1,9 @@
 module PageDesc
   module ElementGenerator
-    [:element, :clickable].each do |element_type|
-      define_method element_type do |*args, &block|
+    [Actions::Element, Actions::Clickable].each do |element_type|
+      element_name = element_type.name[/.*::(.*)/, 1].downcase.to_sym
+
+      define_method element_name do |*args, &block|
         identifier = args.first
 
         define_singleton_method identifier do |*params|
@@ -12,7 +14,7 @@ module PageDesc
             element = Element.new(parent: self, selector: args[1], params: params, &block)
           end
 
-          element.extend eval("Actions::#{element_type.to_s.capitalize}")
+          element.extend element_type
           element
         end
       end
