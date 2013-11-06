@@ -16,10 +16,12 @@ module PageDesc
         if args[1].is_a?(Class)
           element = args[1].main_element.clone
           element.parent = self
-          element
         else
-          Element.new(parent: self, selector: args[1], params: params, &block)
+          element = Element.new(parent: self, selector: args[1], params: params, &block)
         end
+
+        element.extend BaseActions
+        element
       end
     end
 
@@ -30,12 +32,6 @@ module PageDesc
     end
 
     #TODO actions: text, has_text, css_class, attributes, click, set, values
-    def method_missing name, *args
-      hooks[:before].call if hooks[:before]
-      result = browser_element.send(name, *args)
-      hooks[:after].call if hooks[:after]
-      result
-    end
 
     def browser_element
       return browser.document unless parent

@@ -4,6 +4,7 @@ require 'capybara'
 
 require 'session'
 require 'browser'
+require 'base_actions'
 require 'element'
 require 'section'
 require 'page'

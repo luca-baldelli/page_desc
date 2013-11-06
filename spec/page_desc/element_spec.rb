@@ -55,13 +55,6 @@ describe PageDesc::Element do
         element.browser_element.should == browser_element
       end
     end
-
-    it 'delegates to browser element' do
-      parent = double(:parent, browser_element: double(:browser_element, find: 'element'))
-      element = Element.new(parent: parent, selector: {css: '.selector'})
-      element.browser_element.should_receive(:some_method).with(:some_argument, :another_argument)
-      element.some_method(:some_argument, :another_argument)
-    end
   end
 
   context 'sub elements' do
@@ -111,45 +104,61 @@ describe PageDesc::Element do
       end
 
       element.sub_element('a param', some: 'params')
-
       params.should == ['a param', {some: 'params'}]
+    end
+
+    context 'base actions' do
+      it 'are extended by elements' do
+        element = Element.new
+        element.element :sub_element
+        (class << element.sub_element; self; end).included_modules.should include(BaseActions)
+      end
+
+      it 'are extended by sections' do
+        class SubSection < Section
+        end
+
+        section_main_element = Element.new(selector: {css: 'section'})
+        SubSection.instance_variable_set(:@main_element, section_main_element)
+
+        element = Element.new do
+          element(:sub_section, SubSection)
+        end
+
+        (class << element.sub_section; self; end).included_modules.should include(BaseActions)
+      end
     end
   end
 
   context 'hooks' do
     it 'can be set in element block' do
-      hooks_called = []
-
       element = Element.new do
         element(:sub_element, css: 'selector') do
-          before { hooks_called << :before }
-          after { hooks_called << :after }
+          before { :before }
+          after { :after }
         end
       end
 
-      sub_element = double(:sub_element, action: 'action')
-      element.stub(:browser_element).and_return(double(:parent_element, find: sub_element))
-      element.sub_element.action.should == 'action'
-      hooks_called.should == [:before, :after]
+      hooks = element.sub_element.instance_variable_get(:@hooks)
+      hooks[:before].call.should == :before
+      hooks[:after].call.should == :after
     end
 
     it 'can be set in section' do
-
       class TheSection < Section
         selector(css: 'selector')
 
-        before { (@hooks_called||=[]) << :before }
-        after { (@hooks_called||=[]) << :after }
+        before { :before }
+        after { :after }
       end
 
       element = Element.new do
         element(:sub_element, TheSection)
       end
 
-      sub_element = double(:sub_element, click: 'click')
-      element.stub(:browser_element).and_return(double(:parent_element, find: sub_element))
-      element.sub_element.click
-      TheSection.instance_variable_get(:@hooks_called).should == [:before, :after]
+      hooks = element.sub_element.instance_variable_get(:@hooks)
+      hooks[:before].call.should == :before
+      hooks[:after].call.should == :after
     end
   end
 end
