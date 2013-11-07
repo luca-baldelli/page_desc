@@ -22,7 +22,6 @@ module PageDesc
     end
 
     #TODO actions: set, values
-    #TODO action-specific hooks
 
     def browser_element
       return browser.document unless parent
