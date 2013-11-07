@@ -1,11 +1,13 @@
 require 'spec_helper'
 
-describe Actions::ElementActions do
-  include_context :actions
+#TODO test creation of new types
+
+describe Types::Element do
+  include_context :types
 
   before do
-    element.extend(Actions::ElementActions)
-    element_with_hooks.extend(Actions::ElementActions)
+    element.extend(Types::Element)
+    element_with_hooks.extend(Types::Element)
   end
 
   describe 'text' do

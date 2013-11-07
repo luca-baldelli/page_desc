@@ -1,7 +1,7 @@
 
 module PageDesc
-  module Actions
-    module ElementActions
+  module Types
+    module Element
       extend Action
 
       action :text do

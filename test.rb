@@ -14,4 +14,4 @@ include PageDesc::Browser
 
 browser.visit(GooglePage)
 
-puts page.search.css_class
+puts page.search.click

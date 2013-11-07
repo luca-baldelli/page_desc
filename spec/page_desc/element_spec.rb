@@ -109,13 +109,13 @@ describe PageDesc::Element do
         it 'are extended by elements' do
           element = Element.new
           element.element :sub_element
-          (class << element.sub_element; self; end).included_modules.should include(Actions::ElementActions)
+          (class << element.sub_element; self; end).included_modules.should include(Types::Element)
         end
 
         it 'are extended by clickables' do
           element = Element.new
           element.clickable :sub_element, css: 'selector'
-          (class << element.sub_element; self; end).included_modules.should include(Actions::ElementActions)
+          (class << element.sub_element; self; end).included_modules.should include(Types::Element)
         end
 
         it 'are extended by sections' do
@@ -129,7 +129,7 @@ describe PageDesc::Element do
             element(:sub_section, SubSection)
           end
 
-          (class << element.sub_section; self; end).included_modules.should include(Actions::ElementActions)
+          (class << element.sub_section; self; end).included_modules.should include(Types::Element)
         end
       end
 
@@ -137,7 +137,7 @@ describe PageDesc::Element do
         it 'are extended by clickables' do
           element = Element.new
           element.clickable :sub_element, css: 'selector'
-          (class << element.sub_element; self; end).included_modules.should include(Actions::ClickableActions)
+          (class << element.sub_element; self; end).included_modules.should include(Types::Clickable)
         end
       end
     end

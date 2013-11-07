@@ -1,10 +1,10 @@
 module PageDesc
-  module Actions
-    module ClickableActions
+  module Types
+    module Clickable
       extend Action
 
       def self.extended clazz
-        clazz.extend Actions::ElementActions
+        clazz.extend Types::Element
       end
 
       action :click do

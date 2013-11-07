@@ -16,7 +16,7 @@ RSpec.configure do
     end
   end
 
-  shared_context :actions do
+  shared_context :types do
     let(:element) do
       Element.new(session: double(:session, document: double(:document)))
     end

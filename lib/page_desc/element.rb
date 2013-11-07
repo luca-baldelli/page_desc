@@ -3,11 +3,11 @@ module PageDesc
     attr_reader :selector, :params
     attr_accessor :parent, :session
 
-    include ElementGenerator
 
     def initialize options={}, &block
       @selector, @parent, @session = options[:selector], options[:parent], options[:session]
       @params = options[:params]
+      self.extend ElementGenerator
       self.instance_exec(*@params, &block) if block_given?
     end
 
