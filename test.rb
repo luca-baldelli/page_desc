@@ -1,35 +1,36 @@
-require_relative('lib/page_desc')
+require_relative 'lib/page_desc'
 
-include PageDesc
+module Button
+  extend PageDesc::Action
 
-class GitHub < Page
-  url 'https://github.com'
-  element :sign_in, css: '.signin' do
-    after do
-      browser.move_to(GitHubLogin)
-    end
+  also_extend PageDesc::Types::Clickable
+
+  action :on_click do
+    puts browser_element[:onclick]
   end
 end
 
-class LoginForm < Section
-  selector css: 'form[action="/session"]'
+class More < PageDesc::Section
+  selector css: '#more-less-button'
 
-  element :forgot_password, css: 'a[href="/sessions/forgot_password"]'
+  before :on_click do
+    puts 'before CALLED'
+  end
+
+  after :on_click do
+    puts 'after CALLED'
+  end
 end
 
-class GitHubLogin < Page
-  url 'https://github.com/login'
+class GooglePage < PageDesc::Page
+  url 'http://google.co.uk'
 
-  element :login_form, LoginForm
+  button :more, More
 end
 
-include Browser
+include PageDesc::Browser
 
-browser.visit(GitHub)
+browser.visit(GooglePage)
 
-page.sign_in.click
-
-puts page.login_form.attribute(:action)
-#has_class
-#text
-#has_text?
+page.more.on_click
+page.more.click
