@@ -3,7 +3,6 @@ module PageDesc
     attr_reader :selector, :params
     attr_accessor :parent, :session
 
-
     def initialize options={}, &block
       @selector, @parent, @session = options[:selector], options[:parent], options[:session]
       @params = options[:params]
