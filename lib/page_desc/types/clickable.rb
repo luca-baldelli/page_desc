@@ -3,9 +3,7 @@ module PageDesc
     module Clickable
       extend Action
 
-      def self.extended clazz
-        clazz.extend Types::Element
-      end
+      also_extend Element
 
       action :click do
         browser_element.click

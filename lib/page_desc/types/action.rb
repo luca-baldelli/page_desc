@@ -11,6 +11,15 @@ module PageDesc
       end
     end
 
+    def also_extend *types
+      return (@also_extend||=[]) if types.empty?
+      types.each { |type| (@also_extend||=[]) << type }
+    end
+
+    def extended clazz
+      also_extend.each { |type| clazz.extend type }
+    end
+
     def action name, &block
       define_method name do |*args|
         execute_with_hooks(name) { instance_exec(*args, &block) }

@@ -23,6 +23,19 @@ describe PageDesc::Action do
     main_element.test_element.test_action('Value').should == "test action called with parameter: 'Value'"
   end
 
+  it 'can extend other elements' do
+    module AnotherCustomElement
+      extend PageDesc::Action
+      also_extend CustomElement
+    end
+
+    main_element = Element.new do
+      another_custom_element :test_element
+    end
+
+    main_element.test_element.another_action.should == 'the action'
+  end
+
   it 'calls hooks' do
     hooks_called = []
     main_element = Element.new do
