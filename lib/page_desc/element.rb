@@ -12,8 +12,12 @@ module PageDesc
     end
 
     [:before, :after].each do |hook|
-      define_method(hook) do |&block|
-        hooks[hook] = block
+      define_method(hook) do |action=nil, &block|
+        if action
+          (hooks[action]||={})[hook] = block
+        else
+          hooks[hook] = block
+        end
       end
     end
 

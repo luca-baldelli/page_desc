@@ -173,5 +173,18 @@ describe PageDesc::Element do
       hooks[:before].call.should == :before
       hooks[:after].call.should == :after
     end
+
+    it 'can be action-specific' do
+      element = Element.new do
+        element(:sub_element, css: 'selector') do
+          before(:click) { :before }
+          after(:click) { :after }
+        end
+      end
+
+      hooks = element.sub_element.instance_variable_get(:@hooks)
+      hooks[:click][:before].call.should == :before
+      hooks[:click][:after].call.should == :after
+    end
   end
 end
