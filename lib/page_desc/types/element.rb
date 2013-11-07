@@ -15,6 +15,10 @@ module PageDesc
       action :css_class do
         browser_element[:class]
       end
+
+      action :attribute do |attribute|
+        browser_element[attribute]
+      end
     end
   end
 end

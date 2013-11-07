@@ -2,6 +2,7 @@ $LOAD_PATH.unshift("#{__dir__}/page_desc")
 
 require 'capybara'
 
+require 'ext/string'
 require 'session'
 require 'browser'
 require 'types/action'

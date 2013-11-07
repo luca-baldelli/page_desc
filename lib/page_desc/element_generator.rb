@@ -2,7 +2,7 @@ module PageDesc
   module ElementGenerator
     def self.extended clazz
       Action.types.each do |element_type|
-        element_name = element_type.name[/.*::(.*)/, 1].downcase.to_sym
+        element_name = element_type.name.gsub(/.*::(.*)/, '\1').to_snake_case.to_sym
 
         define_method element_name do |*args, &block|
           identifier = args.first

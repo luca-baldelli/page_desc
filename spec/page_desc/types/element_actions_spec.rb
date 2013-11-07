@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-#TODO test creation of new types
-
 describe Types::Element do
   include_context :types
 
@@ -45,6 +43,19 @@ describe Types::Element do
     it 'can check if css class is present and call hooks' do
       element_with_hooks.browser_element.should_receive(:[]).with(:class).and_return 'classes'
       element_with_hooks.css_class.should == 'classes'
+      hooks_called.should == [:before, :after]
+    end
+  end
+
+  describe 'attribute' do
+    it 'can retrieve attribute value' do
+      element.browser_element.should_receive(:[]).with(:href).and_return 'http://'
+      element.attribute(:href).should == 'http://'
+    end
+
+    it 'can retrieve attribute value and call hooks' do
+      element_with_hooks.browser_element.should_receive(:[]).with(:href).and_return 'http://'
+      element_with_hooks.attribute(:href).should == 'http://'
       hooks_called.should == [:before, :after]
     end
   end

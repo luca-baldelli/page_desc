@@ -17,7 +17,8 @@ module PageDesc
       end
     end
 
-    #TODO actions: attributes, set, values
+    #TODO actions: set, values
+    #TODO action-specific hooks
 
     def browser_element
       return browser.document unless parent
