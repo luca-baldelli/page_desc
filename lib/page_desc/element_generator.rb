@@ -1,6 +1,6 @@
 module PageDesc
   module ElementGenerator
-    [Actions::ElementActions, Actions::ClickableActions].each do |element_type|
+    Action.types.each do |element_type|
       element_name = element_type.name[/.*::(.*)Actions/, 1].downcase.to_sym
 
       define_method element_name do |*args, &block|

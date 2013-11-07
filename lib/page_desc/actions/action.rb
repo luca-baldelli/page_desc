@@ -1,7 +1,14 @@
 module PageDesc
   module Action
-    def self.extended clazz
-      clazz.instance_eval { include InstanceMethods }
+    class << self
+      def types
+        @types||=[]
+      end
+
+      def extended clazz
+        clazz.instance_eval { include InstanceMethods }
+        types << clazz
+      end
     end
 
     def action name, &block
