@@ -1,4 +1,5 @@
 $LOAD_PATH.unshift("#{__dir__}/page_desc")
+$LOAD_PATH.unshift(__dir__)
 
 require 'capybara'
 
