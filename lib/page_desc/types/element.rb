@@ -1,4 +1,3 @@
-
 module PageDesc
   module Types
     module Element
