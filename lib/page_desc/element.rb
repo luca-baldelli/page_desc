@@ -21,6 +21,8 @@ module PageDesc
     end
 
     #TODO actions: set, values
+    #TODO support for headless
+    #TODO inheritance
 
     def browser_element
       return browser.document unless parent

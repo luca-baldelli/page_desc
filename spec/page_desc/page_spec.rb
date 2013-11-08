@@ -21,6 +21,32 @@ describe PageDesc::Page do
     test_page.some_method(:some_argument, :another_argument)
   end
 
+  context 'children' do
+    before do
+      class ParentPage < Page
+        element :inherited_element
+      end
+
+      class ChildPage < ParentPage
+        url 'http://child_page'
+      end
+    end
+
+    it 'can override url' do
+      ChildPage.url.should == 'http://child_page'
+    end
+
+    it 'delegate to main element' do
+      child_page = ChildPage.new(:session)
+      child_page.instance_variable_get(:@main_element).should_receive(:some_method).with(:some_argument, :another_argument)
+      child_page.some_method(:some_argument, :another_argument)
+    end
+
+    it 'inherit main element defined in parent class' do
+      ChildPage.new(:session).inherited_element
+    end
+  end
+
   describe 'class' do
     context 'main element' do
       it 'has a main element' do

@@ -22,10 +22,12 @@ class More < PageDesc::Section
   end
 end
 
-class GooglePage < PageDesc::Page
-  url 'http://google.co.uk'
-
+class Page < PageDesc::Page
   button :more, More
+end
+
+class GooglePage < Page
+  url 'http://google.co.uk'
 end
 
 include PageDesc::Browser
